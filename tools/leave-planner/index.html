@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Leave &amp; Holiday Planner - balances and team clashes (offline)</title>
+    <meta
+      name="description"
+      content="Track leave balances, count working days around holidays and spot team clashes. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container wide">
+      <header class="site">
+        <div>
+          <h1>Leave &amp; Holiday Planner</h1>
+          <p>Working days, balances and team clashes, from your own holiday list.</p>
+        </div>
+        <span class="badge">Works offline - employee data never leaves this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-rules">
+        <h2 id="h-rules">1. Your rules</h2>
+        <div class="three">
+          <div>
+            <label for="roster">Team (one per line: Name, Team)</label>
+            <textarea id="roster" rows="7" placeholder="Asha, Engineering&#10;Ravi, Engineering&#10;Meera, Sales"></textarea>
+          </div>
+          <div>
+            <label for="ent">Leave types (Type, days per year)</label>
+            <textarea id="ent" rows="7"></textarea>
+          </div>
+          <div>
+            <label for="hol">Company holidays (Date Name)</label>
+            <textarea id="hol" rows="7"></textarea>
+          </div>
+        </div>
+        <div class="grid">
+          <div><label for="year">Year</label><input type="number" id="year" min="2000" max="2100" /></div>
+          <div>
+            <label for="weekend">Weekly off</label
+            ><select id="weekend">
+              <option value="0,6">Saturday and Sunday</option>
+              <option value="0">Sunday only</option>
+              <option value="5,6">Friday and Saturday</option>
+            </select>
+          </div>
+          <div>
+            <label for="limit">Warn when this share of a team is away</label
+            ><select id="limit">
+              <option value="0.34">One third or more</option>
+              <option value="0.5" selected>Half or more</option>
+              <option value="0.75">Three quarters or more</option>
+            </select>
+          </div>
+        </div>
+        <p class="status" id="rules-status" role="status"></p>
+        <p class="hint">Dates can be written 2026-11-08 or 08/11/2026. Lines starting with # are ignored.</p>
+      </section>
+
+      <section class="card" aria-labelledby="h-leaves">
+        <h2 id="h-leaves">2. Leave taken or planned</h2>
+        <div class="row">
+          <div>
+            <label for="l-emp">Employee</label><input type="text" id="l-emp" list="emp-list" autocomplete="off" /><datalist
+              id="emp-list"
+            ></datalist>
+          </div>
+          <div>
+            <label for="l-type">Leave type</label
+            ><select id="l-type"></select>
+          </div>
+          <div><label for="l-start">From</label><input type="date" id="l-start" /></div>
+          <div><label for="l-end">To</label><input type="date" id="l-end" /></div>
+        </div>
+        <div class="row">
+          <label class="inline"><input type="checkbox" id="l-hs" /> Half day on the first day</label>
+          <label class="inline"><input type="checkbox" id="l-he" /> Half day on the last day</label>
+          <button id="l-add" type="button" class="primary">Add leave</button>
+          <label class="file">Import from Excel/CSV<input type="file" id="import" accept=".xlsx,.xls,.csv,.tsv" /></label>
+        </div>
+        <p class="hint">Import columns: Employee, Type, Start, End (one row per leave).</p>
+        <p class="status" id="leave-status" role="status"></p>
+        <div class="table-wrap">
+          <table id="entries-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Type</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Working days</th>
+                <th scope="col"><span class="sr">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="entries"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-res">
+        <h2 id="h-res">3. Balances and warnings</h2>
+        <div class="table-wrap">
+          <table id="bal-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Team</th>
+                <th scope="col">Leave type</th>
+                <th scope="col">Entitled</th>
+                <th scope="col">Used</th>
+                <th scope="col">Left</th>
+              </tr>
+            </thead>
+            <tbody id="bal"></tbody>
+          </table>
+        </div>
+        <h3>Warnings</h3>
+        <ul id="warnings"></ul>
+        <h3>Team calendar</h3>
+        <div class="row">
+          <div>
+            <label for="month">Month</label
+            ><select id="month"></select>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="grid-cal" id="cal"></table></div>
+        <p class="hint">L = leave, h = half day, W = weekly off, H = company holiday.</p>
+        <div class="row">
+          <button class="primary" id="dl-bal" type="button">Balances CSV</button>
+          <button id="dl-leaves" type="button">Leave list CSV</button>
+          <button id="save" type="button">Save to continue later (.json)</button>
+          <label class="file">Open saved file<input type="file" id="open" accept=".json,application/json" /></label>
+        </div>
+        <p class="status" id="out-status" role="status"></p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed - <a href="vendor/README.md">SheetJS</a></footer>
+    </main>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

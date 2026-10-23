@@ -1,0 +1,98 @@
+/* Onboarding & Exit Checklist - tool-specific styles. */
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+}
+.lead {
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+h3 {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 1rem;
+}
+.bar {
+  height: 0.8rem;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.25rem 0;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #16a34a;
+  transition: width 0.2s;
+}
+.phase {
+  margin: 1rem 0;
+}
+.phase h3 {
+  margin: 0 0 0.4rem;
+}
+ul.tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul.tasks li {
+  display: grid;
+  grid-template-columns: auto 1fr 7rem 9.5rem auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+ul.tasks li.done .t {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+ul.tasks li.late .due {
+  color: #b91c1c;
+  font-weight: 600;
+}
+ul.tasks input[type='text'],
+ul.tasks input[type='date'] {
+  width: 100%;
+  min-width: 0;
+}
+@media (max-width: 40rem) {
+  ul.tasks li {
+    grid-template-columns: auto 1fr;
+  }
+}
+label.file {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+}
+label.file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+label.file:focus-within {
+  outline: 2px solid var(--accent, #2563eb);
+}
+@media print {
+  header.site,
+  footer.site,
+  #h-new,
+  .row,
+  .hint,
+  #out-card,
+  #t-title {
+    display: none !important;
+  }
+  .card:first-of-type {
+    display: none;
+  }
+}

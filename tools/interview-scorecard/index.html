@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Interview Scorecard - fair, weighted candidate scoring (offline)</title>
+    <meta
+      name="description"
+      content="Score candidates against the same criteria, combine several interviewers, and see a ranked summary. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="site">
+        <div>
+          <h1>Interview Scorecard</h1>
+          <p>Score every candidate on the same criteria, then compare fairly.</p>
+        </div>
+        <span class="badge">Works offline - candidate data never leaves this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-setup">
+        <h2 id="h-setup">1. Set up the role</h2>
+        <div class="grid">
+          <div><label for="role">Role</label><input type="text" id="role" placeholder="Backend Engineer" /></div>
+          <div>
+            <label for="preset">Start from</label>
+            <select id="preset">
+              <option value="general">General</option>
+              <option value="technical">Technical</option>
+              <option value="sales">Sales</option>
+              <option value="leadership">Leadership</option>
+            </select>
+          </div>
+          <div>
+            <label for="people">Interviewers (comma separated, up to 8)</label><input type="text" id="people" value="Interviewer 1" />
+          </div>
+        </div>
+        <div class="row"><button id="apply-preset" type="button">Use this criteria set</button></div>
+        <p class="status" id="setup-status" role="status"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Criterion</th>
+                <th scope="col">Weight</th>
+                <th scope="col"><span class="sr">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="criteria"></tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div><label for="new-crit">New criterion</label><input type="text" id="new-crit" /></div>
+          <div><label for="new-weight">Weight</label><input type="number" id="new-weight" value="10" min="1" max="1000" /></div>
+          <button id="add-crit" type="button">Add criterion</button>
+        </div>
+        <p class="hint">Weights are relative: 30 counts twice as much as 15. They do not have to add up to 100.</p>
+      </section>
+
+      <section class="card" aria-labelledby="h-score">
+        <h2 id="h-score">2. Score a candidate</h2>
+        <div class="row">
+          <div><label for="cand-name">Add candidate</label><input type="text" id="cand-name" /></div>
+          <button id="add-cand" type="button">Add</button>
+          <div>
+            <label for="cand-pick">Scoring</label
+            ><select id="cand-pick"></select>
+          </div>
+          <button id="del-cand" type="button">Remove candidate</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead id="grid-head"></thead>
+            <tbody id="grid-body"></tbody>
+          </table>
+        </div>
+        <label for="notes">Notes (evidence, examples, concerns)</label>
+        <textarea id="notes" rows="3"></textarea>
+        <p class="hint">
+          Scale: 1 Weak, 2 Below expectations, 3 Meets expectations, 4 Strong, 5 Outstanding. Score on evidence from the interview, not on
+          gut feeling.
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="h-rank">
+        <h2 id="h-rank">3. Ranking</h2>
+        <div class="table-wrap">
+          <table id="rank-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Candidate</th>
+                <th scope="col">Score (of 5)</th>
+                <th scope="col">Percent</th>
+                <th scope="col">Recommendation</th>
+                <th scope="col">Rated</th>
+                <th scope="col">Interviewers disagree on</th>
+              </tr>
+            </thead>
+            <tbody id="rank-body"></tbody>
+          </table>
+        </div>
+        <p class="status" id="rank-status" role="status">Add candidates and scores to see the ranking.</p>
+        <div class="row">
+          <button class="primary" id="dl-csv" type="button" disabled>Download CSV</button>
+          <button id="save" type="button">Save to edit later (.json)</button>
+          <label class="file">Open saved file<input type="file" id="open" accept=".json,application/json" /></label>
+          <button id="print" type="button">Print</button>
+        </div>
+        <p class="status" id="file-status" role="status"></p>
+        <p class="hint">
+          The ranking supports a decision; it does not make it. Review disagreements and notes together, and keep records according to your
+          company policy.
+        </p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed</footer>
+    </main>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

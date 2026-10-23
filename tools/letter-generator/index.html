@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Letter Generator - HR letters as PDFs (offline)</title>
+    <meta
+      name="description"
+      content="Create offer, confirmation, salary revision, warning, experience and relieving letters as PDFs. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="site">
+        <div>
+          <h1>Letter Generator</h1>
+          <p>Fill in a few details and get a ready-to-sign HR letter as a PDF.</p>
+        </div>
+        <span class="badge">Works offline - employee details never leave this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-lh">
+        <h2 id="h-lh">1. Your letterhead</h2>
+        <div class="grid">
+          <div><label for="company">Company name</label><input type="text" id="company" autocomplete="off" /></div>
+          <div><label for="address">Address (one or two lines)</label><input type="text" id="address" autocomplete="off" /></div>
+          <div><label for="signatory">Signatory name</label><input type="text" id="signatory" autocomplete="off" /></div>
+          <div>
+            <label for="sig-title">Signatory title</label><input type="text" id="sig-title" autocomplete="off" placeholder="HR Manager" />
+          </div>
+        </div>
+        <label class="inline"><input type="checkbox" id="remember" /> Remember these four fields on this device</label>
+        <p class="hint">Saved only in this browser (not uploaded). Untick to forget them.</p>
+      </section>
+
+      <section class="card" aria-labelledby="h-fill">
+        <h2 id="h-fill">2. The letter</h2>
+        <div class="grid">
+          <div>
+            <label for="kind">Type of letter</label
+            ><select id="kind"></select>
+          </div>
+          <div><label for="letter-date">Letter date</label><input type="date" id="letter-date" /></div>
+        </div>
+        <div class="grid" id="fields"></div>
+        <p class="status" id="check" role="status"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-prev">
+        <h2 id="h-prev">3. Preview and download</h2>
+        <article class="paper" id="paper" aria-label="Letter preview"></article>
+        <div class="grid">
+          <div>
+            <label for="size">Paper</label
+            ><select id="size">
+              <option value="a4">A4</option>
+              <option value="letter">US Letter</option>
+            </select>
+          </div>
+          <div>
+            <label for="font">Font</label
+            ><select id="font">
+              <option value="helvetica">Sans-serif</option>
+              <option value="times">Serif</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <button class="primary" id="pdf" type="button">Download PDF</button>
+          <button id="copy" type="button">Copy as text</button>
+        </div>
+        <p class="status" id="out" role="status"></p>
+        <p class="hint">These are sample templates. Have your HR or legal team approve the wording before using them.</p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed - <a href="vendor/README.md">pdf-lib</a></footer>
+    </main>
+    <script src="vendor/pdf-lib.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

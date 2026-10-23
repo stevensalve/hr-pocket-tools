@@ -1,0 +1,64 @@
+/* Interview Scorecard - tool-specific styles. */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+td input[type='text'],
+td input[type='number'] {
+  width: 100%;
+  min-width: 6rem;
+}
+td select {
+  min-width: 6rem;
+}
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #e5e7eb;
+}
+.pill.strong {
+  background: #bbf7d0;
+}
+.pill.hire {
+  background: #d9f99d;
+}
+.pill.maybe {
+  background: #fde68a;
+}
+.pill.no {
+  background: #fecaca;
+}
+label.file {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+}
+label.file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+label.file:focus-within {
+  outline: 2px solid var(--accent, #2563eb);
+}
+@media print {
+  .card:not([aria-labelledby='h-rank']),
+  header.site,
+  footer.site,
+  .row,
+  .hint {
+    display: none !important;
+  }
+}

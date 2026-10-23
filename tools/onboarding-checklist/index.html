@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Onboarding &amp; Exit Checklist - tasks with owners and due dates (offline)</title>
+    <meta
+      name="description"
+      content="Create a new-joiner onboarding or employee exit checklist with owners and due dates worked out for you. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="site">
+        <div>
+          <h1>Onboarding &amp; Exit Checklist</h1>
+          <p>Every task, who owns it and when it is due, worked out from one date.</p>
+        </div>
+        <span class="badge">Works offline - employee details never leave this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-new">
+        <h2 id="h-new">1. Start a checklist</h2>
+        <div class="grid">
+          <div>
+            <label for="type">Checklist</label
+            ><select id="type">
+              <option value="onboarding">New joiner onboarding</option>
+              <option value="exit">Employee exit</option>
+            </select>
+          </div>
+          <div><label for="person">Employee name</label><input type="text" id="person" autocomplete="off" /></div>
+          <div><label for="anchor" id="anchor-label">Date of joining</label><input type="date" id="anchor" /></div>
+          <div>
+            <label for="weekends">Tasks that land on a weekend</label>
+            <select id="weekends">
+              <option value="auto">Move to the nearest working day</option>
+              <option value="none">Leave as they are</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <button class="primary" id="create" type="button">Create checklist</button>
+          <label class="file">Open saved file<input type="file" id="open" accept=".json,application/json" /></label>
+        </div>
+        <p class="status" id="new-status" role="status"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-plan" id="plan-card" hidden>
+        <h2 id="h-plan">2. The checklist</h2>
+        <p id="plan-title" class="lead"></p>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="bar"><span id="bar-fill"></span></div>
+        <p class="status" id="summary" role="status"></p>
+        <div class="row">
+          <div><label for="reschedule">Date changed? Move open tasks to</label><input type="date" id="reschedule" /></div>
+          <button id="do-resched" type="button">Move dates</button>
+          <label class="inline"><input type="checkbox" id="hide-done" /> Hide completed tasks</label>
+        </div>
+        <div id="phases"></div>
+        <h3>Add a task</h3>
+        <div class="row">
+          <div><label for="t-title">Task</label><input type="text" id="t-title" /></div>
+          <div><label for="t-owner">Owner</label><input type="text" id="t-owner" placeholder="HR" /></div>
+          <div><label for="t-due">Due</label><input type="date" id="t-due" /></div>
+          <button id="t-add" type="button">Add</button>
+        </div>
+        <h3>By owner</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Owner</th>
+                <th scope="col">Done</th>
+                <th scope="col">Overdue</th>
+              </tr>
+            </thead>
+            <tbody id="owners"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-out" id="out-card" hidden>
+        <h2 id="h-out">3. Share and save</h2>
+        <div class="row">
+          <button class="primary" id="dl-csv" type="button">Download CSV</button>
+          <button id="dl-ics" type="button">Calendar file (.ics)</button>
+          <button id="copy-md" type="button">Copy as text</button>
+          <button id="save" type="button">Save to continue later (.json)</button>
+          <button id="print" type="button">Print</button>
+        </div>
+        <p class="status" id="out-status" role="status"></p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed</footer>
+    </main>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

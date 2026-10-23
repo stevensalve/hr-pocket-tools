@@ -1,0 +1,29 @@
+/* Payslip Maker - tool-specific styles. */
+.container.wide {
+  max-width: 72rem;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+  margin-top: 0.75rem;
+}
+code {
+  padding: 0.05rem 0.3rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

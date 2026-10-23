@@ -1,0 +1,13 @@
+/* ID Card Maker - tool-specific styles. */
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+  margin-top: 0.75rem;
+}
+input[type='color'] {
+  width: 4rem;
+  height: 2.4rem;
+  padding: 0.1rem;
+}

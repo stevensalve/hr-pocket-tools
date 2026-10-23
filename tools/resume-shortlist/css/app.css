@@ -1,0 +1,47 @@
+/* Resume Shortlist - tool-specific styles. */
+.container.wide {
+  max-width: 72rem;
+}
+.two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+}
+code {
+  padding: 0.05rem 0.3rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #e5e7eb;
+  white-space: nowrap;
+}
+.pill.s {
+  background: #bbf7d0;
+}
+.pill.m {
+  background: #fde68a;
+}
+.pill.n {
+  background: #fecaca;
+}
+td.why {
+  min-width: 18rem;
+  font-size: 0.9rem;
+}
+td.flag {
+  color: #92400e;
+  font-size: 0.85rem;
+}

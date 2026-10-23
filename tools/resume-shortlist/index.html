@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Resume Shortlist - rank candidates against your criteria (offline)</title>
+    <meta
+      name="description"
+      content="Rank a spreadsheet of candidates against must-have and nice-to-have skills, with the reasons shown. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container wide">
+      <header class="site">
+        <div>
+          <h1>Resume Shortlist</h1>
+          <p>Sort a long list of candidates by how well they match what you asked for, and see why.</p>
+        </div>
+        <span class="badge">Works offline - candidate data never leaves this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-file">
+        <h2 id="h-file">1. Your candidate list</h2>
+        <label class="dropzone" id="drop"
+          >Drop an Excel or CSV file here, or click to choose<input type="file" id="file-input" accept=".xlsx,.xls,.csv,.tsv"
+        /></label>
+        <p class="hint">
+          One row per candidate. Useful columns: Name, Experience, Notice Period, Location, Skills, Resume (or Profile / Summary). Other
+          columns are ignored.
+        </p>
+        <p class="status" id="load-status" role="status"></p>
+        <div class="row"><button id="sample" type="button">Try with sample data</button></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-crit">
+        <h2 id="h-crit">2. What are you looking for?</h2>
+        <div class="two">
+          <div>
+            <label for="must">Must-have skills</label><textarea id="must" rows="4" placeholder="Java&#10;SQL&#10;js|javascript"></textarea>
+          </div>
+          <div><label for="nice">Nice to have</label><textarea id="nice" rows="4" placeholder="AWS&#10;Kubernetes"></textarea></div>
+          <div><label for="avoid">Avoid (disqualifies)</label><textarea id="avoid" rows="2" placeholder="Optional"></textarea></div>
+        </div>
+        <p class="hint">One per line or separated by commas. Write alternatives with a bar: <code>js|javascript</code>.</p>
+        <div class="grid">
+          <div><label for="min-y">Minimum years of experience</label><input type="number" id="min-y" min="0" step="0.5" /></div>
+          <div><label for="max-y">Maximum years</label><input type="number" id="max-y" min="0" step="0.5" /></div>
+          <div><label for="notice">Longest notice period (days)</label><input type="number" id="notice" min="0" /></div>
+          <div>
+            <label for="locs">Preferred locations (comma separated)</label><input type="text" id="locs" placeholder="Pune, Mumbai" />
+          </div>
+          <div><label for="bar">Shortlist from score</label><input type="number" id="bar" value="60" min="1" max="100" /></div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-res">
+        <h2 id="h-res">3. Ranking</h2>
+        <div class="row">
+          <label class="inline"><input type="checkbox" id="blind" /> Blind mode: hide names while reviewing</label>
+          <div>
+            <label for="show">Show</label
+            ><select id="show">
+              <option value="all">Everyone</option>
+              <option value="Shortlist">Shortlist only</option>
+              <option value="Maybe">Maybe only</option>
+              <option value="Not a match">Not a match only</option>
+            </select>
+          </div>
+        </div>
+        <p class="status" id="summary" role="status">Load a list to see the ranking.</p>
+        <div class="table-wrap">
+          <table id="result" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Ref</th>
+                <th scope="col" id="name-head">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Score</th>
+                <th scope="col">Why</th>
+                <th scope="col">Please check</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="row"><button class="primary" id="dl" type="button" disabled>Download ranking (CSV)</button></div>
+        <p class="hint">
+          This is a first-pass sorting aid based only on the criteria above. It does not read PDFs, judge quality or look at personal
+          details such as name, gender or age. Always have a person review the list, including the "Maybe" group.
+        </p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed - <a href="vendor/README.md">SheetJS</a></footer>
+    </main>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Policy Acknowledgement Tracker - who has read what (offline)</title>
+    <meta
+      name="description"
+      content="Track who has acknowledged each policy, see overdue items by team and copy reminders. Runs in your browser; nothing is uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container wide">
+      <header class="site">
+        <div>
+          <h1>Policy Acknowledgement Tracker</h1>
+          <p>Who has read and accepted which policy, what is overdue, and ready-to-send reminders.</p>
+        </div>
+        <span class="badge">Works offline - employee data never leaves this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-people">
+        <h2 id="h-people">1. People</h2>
+        <label for="people">One per line: Name, Team, E-mail (team and e-mail optional)</label>
+        <textarea
+          id="people"
+          rows="6"
+          placeholder="Asha Rao, Engineering, asha@example.com&#10;Ravi Kumar, Engineering&#10;Meera Shah, Sales"
+        ></textarea>
+        <div class="row">
+          <button id="p-apply" type="button" class="primary">Use this list</button>
+          <label class="file">Import from Excel/CSV<input type="file" id="p-import" accept=".xlsx,.xls,.csv,.tsv" /></label>
+          <button id="p-sample" type="button">Fill with sample</button>
+        </div>
+        <p class="status" id="people-status" role="status"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-pol">
+        <h2 id="h-pol">2. Policies</h2>
+        <div class="row">
+          <div><label for="pol-name">Policy name</label><input type="text" id="pol-name" maxlength="100" /></div>
+          <div><label for="pol-due">Due date</label><input type="date" id="pol-due" /></div>
+          <button id="pol-add" type="button" class="primary">Add policy</button>
+        </div>
+        <p class="status" id="pol-status" role="status"></p>
+        <div class="table-wrap">
+          <table id="pol-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Policy</th>
+                <th scope="col">Due</th>
+                <th scope="col">Acknowledged</th>
+                <th scope="col">Progress</th>
+                <th scope="col"><span class="sr">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="pol-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-track">
+        <h2 id="h-track">3. Acknowledgements</h2>
+        <p class="hint">Tick when a person has acknowledged. The date defaults to today; change it below first if needed.</p>
+        <div class="row">
+          <div><label for="ack-date">Date to record</label><input type="date" id="ack-date" /></div>
+          <div>
+            <label for="ack-team">Team filter</label
+            ><select id="ack-team">
+              <option value="">All teams</option>
+            </select>
+          </div>
+          <div>
+            <label for="ack-pol">Mark whole team done for</label
+            ><select id="ack-pol"></select>
+          </div>
+          <button id="ack-all" type="button">Mark done</button>
+          <label class="file"
+            >Import acknowledgements (Name, Policy, Date)<input type="file" id="a-import" accept=".xlsx,.xls,.csv,.tsv"
+          /></label>
+        </div>
+        <p class="status" id="ack-status" role="status"></p>
+        <div class="table-wrap"><table id="matrix" hidden></table></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-sum">
+        <h2 id="h-sum">4. Teams and reminders</h2>
+        <div class="table-wrap">
+          <table id="team-table" hidden>
+            <thead>
+              <tr>
+                <th scope="col">Team</th>
+                <th scope="col">People</th>
+                <th scope="col">Done</th>
+                <th scope="col">Progress</th>
+              </tr>
+            </thead>
+            <tbody id="team-body"></tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div><label for="sender">Sign reminders as</label><input type="text" id="sender" maxlength="60" placeholder="HR Team" /></div>
+          <label class="inline"><input type="checkbox" id="only-overdue" /> Only people with overdue policies</label>
+          <button id="make-rem" type="button" class="primary">Write reminders</button>
+        </div>
+        <label for="reminders">Reminders (copy into your e-mail)</label>
+        <textarea id="reminders" class="out" rows="9" readonly></textarea>
+        <div class="row">
+          <button id="copy-rem" type="button">Copy</button>
+          <button id="dl-csv" type="button">Status table CSV</button>
+          <button id="save" type="button">Save to continue later (.json)</button>
+          <label class="file">Open saved file<input type="file" id="open" accept=".json,application/json" /></label>
+        </div>
+        <p class="status" id="out-status" role="status"></p>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed - <a href="vendor/README.md">SheetJS</a></footer>
+    </main>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

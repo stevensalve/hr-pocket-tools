@@ -1,0 +1,57 @@
+/* Letter Generator - tool-specific styles. */
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+}
+#fields {
+  margin-top: 0.75rem;
+}
+#fields textarea {
+  min-height: 5rem;
+}
+.paper {
+  margin: 0.75rem 0 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  color: #111;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font:
+    0.95rem/1.6 Georgia,
+    'Times New Roman',
+    serif;
+  max-height: 34rem;
+  overflow: auto;
+}
+.paper .co {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.paper .ad {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #555;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #bbb;
+  margin-bottom: 1rem;
+}
+.paper .dt {
+  text-align: right;
+}
+.paper h3 {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.paper p {
+  margin: 0 0 0.8rem;
+  white-space: pre-wrap;
+}
+.paper .sig {
+  margin-top: 2rem;
+}

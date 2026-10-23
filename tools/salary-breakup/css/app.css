@@ -1,0 +1,36 @@
+/* Salary Breakup - tool-specific styles. */
+.inline {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 400;
+}
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0.75rem 0;
+}
+details {
+  margin: 1rem 0;
+}
+h3 {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 1rem;
+}
+th.num,
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+tr.sub td {
+  font-weight: 700;
+  background: var(--bg);
+}
+tr.grp td {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  padding-top: 0.8rem;
+}
