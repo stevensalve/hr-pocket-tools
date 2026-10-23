@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Headcount Dashboard - joiners, leavers and attrition (offline)</title>
+    <meta
+      name="description"
+      content="Headcount, joiners, leavers, attrition and tenure from an employee spreadsheet. Runs in your browser; employee data is never uploaded."
+    />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <main class="container wide">
+      <header class="site">
+        <div>
+          <h1>Headcount Dashboard</h1>
+          <p>Headcount, joiners, leavers and attrition from your employee list.</p>
+        </div>
+        <span class="badge">Works offline - employee data never leaves this device</span>
+      </header>
+
+      <section class="card" aria-labelledby="h-file">
+        <h2 id="h-file">1. Your employee list</h2>
+        <label class="dropzone" id="drop"
+          >Drop an Excel or CSV file here, or click to choose<input type="file" id="file-input" accept=".xlsx,.xls,.csv,.tsv"
+        /></label>
+        <p class="hint">
+          One row per employee. Needed: Date of Joining. Useful: Department, Location, Grade, Gender, Last Working Day (blank for current
+          employees), Employee ID. Names and contact details are never read.
+        </p>
+        <p class="status" id="load-status" role="status"></p>
+        <div class="row"><button id="sample" type="button">Try with sample data</button></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-period">
+        <h2 id="h-period">2. The period</h2>
+        <div class="grid">
+          <div><label for="from">From month</label><input type="month" id="from" /></div>
+          <div><label for="to">To month</label><input type="month" id="to" /></div>
+          <div>
+            <label for="split">Break down by</label
+            ><select id="split">
+              <option value="dept">Department</option>
+              <option value="location">Location</option>
+              <option value="grade">Grade</option>
+              <option value="gender">Gender</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-kpi" id="out" hidden>
+        <h2 id="h-kpi">3. The numbers</h2>
+        <div class="kpis" id="kpis"></div>
+        <h3>Headcount by month</h3>
+        <figure>
+          <svg id="chart" role="img" aria-label="Closing headcount by month"></svg>
+          <figcaption class="hint">Bars show closing headcount; the table below has every number.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Month</th>
+                <th scope="col">Opening</th>
+                <th scope="col">Joiners</th>
+                <th scope="col">Leavers</th>
+                <th scope="col">Closing</th>
+                <th scope="col">Attrition % (month)</th>
+              </tr>
+            </thead>
+            <tbody id="months"></tbody>
+          </table>
+        </div>
+        <h3 id="split-title">By department</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" id="split-head">Department</th>
+                <th scope="col">Headcount at end</th>
+                <th scope="col">Leavers</th>
+                <th scope="col">Attrition %</th>
+              </tr>
+            </thead>
+            <tbody id="split-body"></tbody>
+          </table>
+        </div>
+        <p class="hint" id="small-note"></p>
+        <h3>Tenure of current employees</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Tenure</th>
+                <th scope="col">People</th>
+              </tr>
+            </thead>
+            <tbody id="tenure"></tbody>
+          </table>
+        </div>
+        <div class="row"><button class="primary" id="dl" type="button">Download monthly table (CSV)</button></div>
+        <details>
+          <summary>How are these numbers worked out?</summary>
+          <ul>
+            <li><strong>Headcount</strong> on a date counts people who joined by then and whose last working day is after it.</li>
+            <li>
+              <strong>Attrition %</strong> = leavers in the period divided by average headcount (opening plus closing, divided by two),
+              times 100.
+            </li>
+            <li><strong>Annualised</strong> scales the period figure to a 365-day year, so a quarter can be compared with a year.</li>
+            <li><strong>First-year share</strong> is the part of leavers who left within a year of joining.</li>
+          </ul>
+        </details>
+      </section>
+
+      <footer class="site"><a href="../../index.html">All tools</a> - MIT licensed - <a href="vendor/README.md">SheetJS</a></footer>
+    </main>
+    <script src="vendor/xlsx.full.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
